@@ -13,9 +13,6 @@ O ESP32 recebe uma mensagem contendo duas velocidades:
 
 Esses valores são enviados via **ESP-NOW** e utilizados para controlar os motores em tempo real.
 
-Fluxo do sistema:
-
-Controle remoto → ESP-NOW → ESP32 → controle dos motores
 
 ## Lógica de Movimento
 
@@ -67,5 +64,5 @@ pio run
 
 ## Observação
 
-Projeto desenvolvido para estudo de **sistemas embarcados**, **controle de motores** e **comunicação ESP-NOW**.
+Projeto desenvolvido como parte do programa Trainee para introdução à construção de robôs da categoria VSSS, envolvendo eletrônica, firmware, comunicação, modelagem 3D e estratégia.
 
