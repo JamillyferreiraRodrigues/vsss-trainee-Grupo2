@@ -49,7 +49,7 @@ src/
 ## Hardware alvo
 
 * ESP32-S2
-* Driver de motor (ex: TB6612FNG ou L298N)
+* Driver de motor (ex: TB6612FNG)
 * Dois motores DC
 
 ## Build
