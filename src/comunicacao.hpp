@@ -4,6 +4,7 @@
 struct mensagem {
     int v1;
     int v2;
+    uint8_t checksum;
 };
 
 void comunicacaoSetup();

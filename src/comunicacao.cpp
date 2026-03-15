@@ -3,10 +3,27 @@
 #include <esp_now.h>
 #include "comunicacao.hpp"
 
-static mensagem receivedSpeeds = {0, 0};
+static volatile mensagem receivedSpeeds =  {0, 0, 0};
 
 void OnDataRecv(const uint8_t *mac, const uint8_t *incomingData, int len) {
-    memcpy(&receivedSpeeds, incomingData, sizeof(receivedSpeeds));
+
+    if (len != sizeof(mensagem)) {
+        Serial.println("Erro: tamanho de mensagem incorreto");
+        return;
+    }
+
+    mensagem temp;
+    memcpy(&temp, incomingData, sizeof(temp));
+
+    uint8_t checksumCalculado = temp.v1 + temp.v2;
+
+    if (temp.checksum != checksumCalculado) {
+        Serial.println("Erro: checksum inválido");
+        return;
+    }
+
+   
+    memcpy((void*)&receivedSpeeds, &temp, sizeof(temp));
 }
 
 void comunicacaoSetup() {
@@ -22,5 +39,10 @@ void comunicacaoSetup() {
 }
 
 mensagem getMotorSpeeds() {
-    return receivedSpeeds;
+    mensagem temp;
+
+    temp.v1 = receivedSpeeds.v1;
+    temp.v2 = receivedSpeeds.v2;
+    temp.checksum = receivedSpeeds.checksum;
+    return temp;
 }
