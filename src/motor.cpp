@@ -2,6 +2,7 @@
 #include <Arduino.h>
 #include "motor.hpp"
 
+//Definição dos pinos para controle dos motores
 void motorSetup() {
     pinMode(PWMA, OUTPUT);
     pinMode(PWMB, OUTPUT);
@@ -12,15 +13,19 @@ void motorSetup() {
     pinMode(STBY, OUTPUT);
 }
 
+//Função para controlar os motores com base nas velocidades recebidas
 void controlMotors(int left, int right) {
 
+    //Definir limites para as velocidades dos motores para evitar valores fora do intervalo permitido
     if (left > 255) left = 255;
     if (left < -255) left = -255;
     if (right > 255) right = 255;
     if (right < -255) right = -255;
 
+    //Ativar o modo de controle dos motores ligando o pino de standby
     digitalWrite(STBY, HIGH);
 
+    //Configurar a direção dos motores com base no sinal de velocidade
     if (left > 0) {
         digitalWrite(BIN1, HIGH);
         digitalWrite(BIN2, LOW);
@@ -45,10 +50,12 @@ void controlMotors(int left, int right) {
         digitalWrite(AIN2, LOW);
     }
 
+    //Controlar a velocidade dos motores usando PWM
     analogWrite(PWMB, left);
     analogWrite(PWMA, right);
 }
 
+//Função para parar os motores desligando o pino de standby
 void stop() {
     digitalWrite(STBY, LOW);
 }
